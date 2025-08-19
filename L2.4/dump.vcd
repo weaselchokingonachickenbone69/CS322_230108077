@@ -1,0 +1,434 @@
+$date
+	Tue Aug 19 16:17:01 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_link_top $end
+$var wire 1 ! done $end
+$var reg 1 " clk $end
+$var reg 1 # rst $end
+$scope module dut $end
+$var wire 1 " clk $end
+$var wire 1 # rst $end
+$var wire 1 $ req $end
+$var wire 8 % last_byte [7:0] $end
+$var wire 1 ! done $end
+$var wire 8 & data [7:0] $end
+$var wire 1 ' ack $end
+$scope module master $end
+$var wire 1 " clk $end
+$var wire 1 # rst $end
+$var wire 1 ' ack $end
+$var parameter 3 ( M_DONE $end
+$var parameter 3 ) M_DROP_REQ $end
+$var parameter 3 * M_IDLE $end
+$var parameter 3 + M_REQ $end
+$var parameter 3 , M_WAIT_ACK $end
+$var parameter 3 - M_WAIT_ACK_LOW $end
+$var parameter 32 . NUM_BYTES $end
+$var reg 8 / data [7:0] $end
+$var reg 8 0 data_comb [7:0] $end
+$var reg 1 ! done $end
+$var reg 1 1 done_comb $end
+$var reg 3 2 next_state [2:0] $end
+$var reg 1 $ req $end
+$var reg 1 3 req_comb $end
+$var reg 3 4 state [2:0] $end
+$var integer 32 5 idx [31:0] $end
+$var integer 32 6 next_idx [31:0] $end
+$upscope $end
+$scope module slave $end
+$var wire 1 " clk $end
+$var wire 8 7 data_in [7:0] $end
+$var wire 1 $ req $end
+$var wire 1 # rst $end
+$var parameter 2 8 S_ACK1 $end
+$var parameter 2 9 S_ACK2 $end
+$var parameter 2 : S_WAIT $end
+$var reg 1 ' ack $end
+$var reg 1 ; ack_comb $end
+$var reg 8 < last_byte [7:0] $end
+$var reg 8 = last_byte_comb [7:0] $end
+$var reg 2 > next_state [1:0] $end
+$var reg 2 ? state [1:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b0 :
+b10 9
+b1 8
+b100 .
+b100 -
+b10 ,
+b1 +
+b0 *
+b11 )
+b101 (
+$end
+#0
+$dumpvars
+bx ?
+bx >
+bx =
+bx <
+x;
+bx 7
+bx 6
+bx 5
+bx 4
+03
+b0 2
+01
+b0 0
+bx /
+x'
+bx &
+bx %
+x$
+1#
+0"
+x!
+$end
+#5000
+b0 =
+0;
+b0 >
+b1 2
+b0 6
+b0 5
+b0 4
+0!
+b0 &
+b0 /
+b0 7
+0$
+b0 ?
+b0 %
+b0 <
+0'
+1"
+#10000
+0"
+#15000
+0#
+1"
+#20000
+0"
+#25000
+b10 2
+b10100000 0
+13
+b1 4
+1"
+#30000
+0"
+#35000
+b1 >
+b10100000 =
+b10100000 0
+13
+b10100000 &
+b10100000 /
+b10100000 7
+1$
+b10 4
+1"
+#40000
+0"
+#45000
+b10 >
+1;
+b0 =
+b1 ?
+b0 %
+b0 <
+1"
+#50000
+0"
+#55000
+b11 2
+b10100000 0
+13
+b0 >
+1;
+1'
+b10 ?
+1"
+#60000
+0"
+#65000
+b1 6
+b100 2
+b10100000 0
+03
+b1 >
+b10100000 =
+0;
+b11 4
+b0 ?
+1"
+#70000
+0"
+#75000
+b10 >
+1;
+b1 2
+b0 0
+b10100000 %
+b10100000 <
+0'
+b1 ?
+0$
+b1 5
+b100 4
+1"
+#80000
+0"
+#85000
+b0 >
+1;
+b10 2
+b10100001 0
+13
+b1 4
+b10100000 &
+b10100000 /
+b10100000 7
+b10 ?
+0'
+1"
+#90000
+0"
+#95000
+b1 >
+b10100001 =
+0;
+b11 2
+b10100001 0
+13
+1'
+b0 ?
+b10100001 &
+b10100001 /
+b10100001 7
+1$
+b10 4
+1"
+#100000
+0"
+#105000
+b10 >
+1;
+b10100000 =
+b10 6
+b100 2
+b10100001 0
+03
+b11 4
+b1 ?
+b10100000 %
+b10100000 <
+1'
+1"
+#110000
+0"
+#115000
+b0 >
+1;
+b0 0
+b10 ?
+0$
+b10 5
+b100 4
+1"
+#120000
+0"
+#125000
+0;
+b10100001 &
+b10100001 /
+b10100001 7
+b0 ?
+1"
+#130000
+0"
+#135000
+b1 2
+0'
+b0 &
+b0 /
+b0 7
+1"
+#140000
+0"
+#145000
+b10 2
+b10100010 0
+13
+b1 4
+1"
+#150000
+0"
+#155000
+b1 >
+b10100010 =
+b10100010 0
+13
+b10100010 &
+b10100010 /
+b10100010 7
+1$
+b10 4
+1"
+#160000
+0"
+#165000
+b10 >
+1;
+b10100000 =
+b1 ?
+b10100000 %
+b10100000 <
+1"
+#170000
+0"
+#175000
+b11 2
+b10100010 0
+13
+b0 >
+1;
+1'
+b10 ?
+1"
+#180000
+0"
+#185000
+b11 6
+b100 2
+b10100010 0
+03
+b1 >
+b10100010 =
+0;
+b11 4
+b0 ?
+1"
+#190000
+0"
+#195000
+b10 >
+1;
+b1 2
+b0 0
+b10100010 %
+b10100010 <
+0'
+b1 ?
+0$
+b11 5
+b100 4
+1"
+#200000
+0"
+#205000
+b0 >
+1;
+b10 2
+b10100011 0
+13
+b1 4
+b10100010 &
+b10100010 /
+b10100010 7
+b10 ?
+0'
+1"
+#210000
+0"
+#215000
+b1 >
+b10100011 =
+0;
+b11 2
+b10100011 0
+13
+1'
+b0 ?
+b10100011 &
+b10100011 /
+b10100011 7
+1$
+b10 4
+1"
+#220000
+0"
+#225000
+b10 >
+1;
+b10100010 =
+b100 6
+b100 2
+b10100011 0
+03
+b11 4
+b1 ?
+b10100010 %
+b10100010 <
+1'
+1"
+#230000
+0"
+#235000
+b0 >
+1;
+b0 0
+b10 ?
+0$
+b100 5
+b100 4
+1"
+#240000
+0"
+#245000
+0;
+b10100011 &
+b10100011 /
+b10100011 7
+b0 ?
+1"
+#250000
+0"
+#255000
+b101 2
+0'
+b0 &
+b0 /
+b0 7
+1"
+#260000
+0"
+#265000
+11
+b101 4
+1"
+#270000
+0"
+#275000
+1!
+1"
+#280000
+0"
+#285000
+1"
+#290000
+0"
+#295000
+1"
