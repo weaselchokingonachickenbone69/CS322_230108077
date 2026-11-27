@@ -30,7 +30,7 @@ module riscvpipeline(input  logic        clk, reset,
   logic [6:0] funct7D;
 
   // Control signals EX stage
-  logic       RegWriteE, MemWriteE, JumpE, BranchE, ALUSrcE;
+  logic       RegWriteE, MemWriteE, JumpE, BranchE, BranchInvE, ALUSrcE;
   logic [1:0] ResultSrcE;
   logic [4:0] ALUControlE;
 
@@ -53,32 +53,30 @@ module riscvpipeline(input  logic        clk, reset,
   assign funct3D = InstrD[14:12];
   assign funct7D = InstrD[31:25];
 
+  // Hazard unit register addresses
+  logic [4:0] Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW;
+
   controller c(clk, reset, opD, funct3D, funct7D,
                FlushE, // Clear EX control signals on flush
                ResultSrcD, MemWriteD, BranchD,
                ALUSrcD, RegWriteD, JumpD,
                ImmSrcD, ALUControlD,
-               ResultSrcE, MemWriteE, BranchE, ALUSrcE, RegWriteE, JumpE, ALUControlE,
+               ResultSrcE, MemWriteE, BranchE, BranchInvE, ALUSrcE, RegWriteE, JumpE, ALUControlE,
                ResultSrcM, MemWriteM, RegWriteM,
                ResultSrcW, RegWriteW);
 
   datapath dp(clk, reset,
               // Hazard unit interface
               StallF, StallD, FlushD, FlushE, ForwardAE, ForwardBE,
+              Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW,
               // ID Stage
               ResultSrcW, RegWriteW, ImmSrcD,
               // EX Stage
-              ResultSrcE, BranchE, JumpE, PCSrcE, ALUSrcE, ALUControlE,
+              BranchE, BranchInvE, JumpE, PCSrcE, ALUSrcE, ALUControlE,
               // MEM Stage
               ResultSrcM,
               // External Memory Interface
               PCF, InstrF, InstrD, ALUResultM, WriteDataM, ReadDataM);
-
-  // Note: hazard_unit logic needs Rs1, Rs2, Rd from different stages
-  // Extract them here or inside datapath. Better to extract in top pipeline level.
-  logic [4:0] Rs1D = InstrD[19:15];
-  logic [4:0] Rs2D = InstrD[24:20];
-  logic [4:0] Rs1E, Rs2E, RdE, RdM, RdW;
 
   hazard_unit hu(Rs1D, Rs2D, Rs1E, Rs2E, RdE, PCSrcE, ResultSrcE,
                  RdM, RegWriteM,
@@ -89,13 +87,17 @@ module riscvpipeline(input  logic        clk, reset,
 endmodule
 
 // Helper modules (Memories)
+/* verilator lint_off UNUSED */
 module imem(input  logic [31:0] a,
             output logic [31:0] rd);
 
   logic [31:0] RAM[63:0];
-  initial
-      $readmemh("rvx10_pipeline.hex", RAM);
-  assign rd = RAM[a[31:2]]; // word aligned
+  initial begin
+    for (int i = 0; i < 64; i++)
+      RAM[i] = 32'h00000013; // Initialize with NOP (addi x0, x0, 0)
+    $readmemh("tests/rvx10_pipeline.hex", RAM);
+  end
+  assign rd = RAM[a[7:2]]; // word aligned
 endmodule
 
 module dmem(input  logic        clk, we,
@@ -103,7 +105,17 @@ module dmem(input  logic        clk, we,
             output logic [31:0] rd);
 
   logic [31:0] RAM[63:0];
-  assign rd = RAM[a[31:2]]; // word aligned
+  initial begin
+    for (int i = 0; i < 64; i++)
+      RAM[i] = 32'h00000000;
+    // Initialize benchmark array at byte address 64 (0x40): [-5, 10, -25, 3]
+    RAM[16] = 32'hFFFF_FFFB; // -5
+    RAM[17] = 32'd10;        //  10
+    RAM[18] = 32'hFFFF_FFE7; // -25
+    RAM[19] = 32'd3;         //  3
+  end
+  assign rd = RAM[a[7:2]]; // word aligned
   always_ff @(posedge clk)
-    if (we) RAM[a[31:2]] <= wd;
+    if (we) RAM[a[7:2]] <= wd;
 endmodule
+/* verilator lint_on UNUSED */
